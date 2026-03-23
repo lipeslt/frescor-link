@@ -1,26 +1,25 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Mercado Ponto Fresco — Frescor e qualidade todo dia</title>
-    <meta name="description" content="Mercado Ponto Fresco: produtos frescos, preços justos e entrega rápida. Seu mercado de confiança agora online." />
-    <meta name="author" content="Lovable" />
+import { useState } from "react";
+import Header from "@/components/Header";
+import HeroBanner from "@/components/HeroBanner";
+import DepartmentGrid from "@/components/DepartmentGrid";
+import ProductGrid from "@/components/ProductGrid";
+import Footer from "@/components/Footer";
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+const Index = () => {
+const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+  return (
+  <div className="flex min-h-screen flex-col">
+    <Header onSearch={setSearchQuery} />
+    <main className="flex-1">
+      <HeroBanner />
+      <DepartmentGrid onSelect={setSelectedCategory} selected={selectedCategory} />
+      <ProductGrid categoryId={selectedCategory} searchQuery={searchQuery} />
+    </main>
+    <Footer />
+  </div>
+  );
+  };
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+  export default Index;
