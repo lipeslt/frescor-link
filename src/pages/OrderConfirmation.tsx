@@ -27,7 +27,7 @@ const OrderConfirmation = () => {
     if (!id) return;
 
     orderService
-        .getById(Number(id))
+        .getById(id)
         .then(({ data }) => setOrder(data))
         .catch(() => setError(true))
         .finally(() => setLoading(false));
@@ -36,7 +36,6 @@ const OrderConfirmation = () => {
   const status = statusMap[order?.status || "PENDENTE"] || statusMap.PENDENTE;
   const StatusIcon = status.icon;
 
-  // Data formatada — usa createdAt ou dataPedido
   const dataFormatada = (() => {
     const raw = order?.createdAt || order?.dataPedido;
     if (!raw) return "—";
@@ -81,13 +80,11 @@ const OrderConfirmation = () => {
                     Pedido #{order?.id} registrado com sucesso.
                   </p>
 
-                  {/* Status */}
                   <div className="flex items-center justify-center gap-2 mb-6">
                     <StatusIcon size={18} className={status.color} />
                     <span className={`font-bold ${status.color}`}>{status.label}</span>
                   </div>
 
-                  {/* Detalhes */}
                   <div className="rounded-xl border border-border bg-card p-6 text-left space-y-3">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Pedido</span>
@@ -108,7 +105,11 @@ const OrderConfirmation = () => {
                   </div>
 
                   <div className="flex gap-3 mt-8">
-                    <Button variant="outline" className="flex-1" onClick={() => navigate("/meus-pedidos")}>
+                    <Button
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => navigate("/meus-pedidos")}
+                    >
                       Meus Pedidos
                     </Button>
                     <Button className="flex-1" onClick={() => navigate("/")}>

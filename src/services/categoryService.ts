@@ -1,12 +1,13 @@
 import api from "@/lib/api";
 
-// Alinhado com a entidade Categoria do backend:
-// id, nome, descricao, createdAt, updatedAt
 export interface Category {
-  id: number;
+  id: string;
   nome: string;
   descricao?: string;
-  icone?: string; // campo extra para uso no frontend (não vem do backend)
+  icone?: string;
+  ativo?: boolean;
+  criadoEm?: string;
+  atualizadoEm?: string;
 }
 
 export interface PageResponse<T> {

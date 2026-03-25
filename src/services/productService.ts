@@ -1,17 +1,18 @@
 import api from "@/lib/api";
 
-// Alinhado com ProdutoResponseDTO do backend:
-// id, nome, descricao, preco, estoque, categoriaId, createdAt, updatedAt
 export interface Product {
-  id: number;
+  id: string;
   nome: string;
   descricao?: string;
   preco: number;
   estoque: number;
-  categoriaId: number;
-  imagemUrl?: string; // campo extra para exibição (pode não vir do backend)
-  createdAt?: string;
-  updatedAt?: string;
+  categoria?: {
+    id: string;
+    nome: string;
+  };
+  imagemUrl?: string;
+  criadoEm?: string;
+  atualizadoEm?: string;
 }
 
 export interface PageResponse<T> {
@@ -25,11 +26,11 @@ export const productService = {
   getAll: (page = 0, size = 12, sort = "nome") =>
       api.get<PageResponse<Product>>("/produtos", { params: { page, size, sort } }),
 
-  getByCategory: (categoriaId: number, page = 0, size = 12) =>
-      api.get<PageResponse<Product>>(`/produtos/categoria/${categoriaId}`, {
-        params: { page, size },
+  getByCategory: (categoriaId: string, page = 0, size = 12) =>
+      api.get<PageResponse<Product>>("/produtos", {
+        params: { categoria: categoriaId, page, size },
       }),
 
-  getById: (id: number) =>
+  getById: (id: string) =>
       api.get<Product>(`/produtos/${id}`),
 };

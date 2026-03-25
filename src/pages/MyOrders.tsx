@@ -27,7 +27,6 @@ const MyOrders = () => {
         orderService
             .getAll()
             .then(({ data }) => {
-                // Filtra apenas os pedidos do usuário logado
                 const content = Array.isArray(data) ? data : (data as any)?.content || [];
                 const meusPedidos = content.filter(
                     (o: PedidoResponse) => o.usuario?.id === user.id

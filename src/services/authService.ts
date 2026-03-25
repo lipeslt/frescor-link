@@ -11,11 +11,8 @@ export interface RegisterPayload {
   senha: string;
 }
 
-// Resposta real do AuthController.login():
-// { accessToken, refreshToken, tipo, expiracaoEm }
-// NÃO retorna "usuario" — precisamos buscá-lo separado
 export interface LoginResponse {
-  accessToken: string;
+  token: string;
   refreshToken: string;
   tipo: string;
   expiracaoEm: number;
@@ -26,16 +23,15 @@ export const authService = {
       api.post<LoginResponse>("/auth/login", data),
 
   register: (data: RegisterPayload) =>
-      api.post("/auth/registrar", data),
+      api.post<LoginResponse>("/auth/register", data),
 
-  // Decodifica o JWT para extrair os dados do usuário (id, nome, email)
-  decodeToken: (token: string): { id: number; nome: string; email: string } | null => {
+  decodeToken: (token: string): { id: string; nome: string; email: string } | null => {
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
       return {
-        id: payload.id,
+        id: payload.sub,
         nome: payload.nome,
-        email: payload.sub,
+        email: payload.email,
       };
     } catch {
       return null;

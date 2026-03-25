@@ -36,7 +36,6 @@ const Checkout = () => {
 
     setLoading(true);
     try {
-      // Cria o pedido no backend com status PENDENTE
       const { data: order } = await orderService.create({
         usuarioId: user.id,
         status: "PENDENTE",

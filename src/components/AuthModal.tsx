@@ -26,14 +26,13 @@ const AuthModal = ({ open, onClose }: AuthModalProps) => {
           senha: form.senha,
         });
 
-        // O backend NÃO retorna "usuario" — decodificamos o JWT
-        const usuario = authService.decodeToken(data.accessToken);
+        const usuario = authService.decodeToken(data.token);
 
         if (!usuario) {
           throw new Error("Não foi possível decodificar o token");
         }
 
-        login(usuario, data.accessToken, data.refreshToken);
+        login(usuario, data.token, data.refreshToken);
         toast({ title: "Bem-vindo de volta!", description: `Olá, ${usuario.nome}` });
         onClose();
       } else {
@@ -57,7 +56,6 @@ const AuthModal = ({ open, onClose }: AuthModalProps) => {
       } else if (status === 423) {
         msg = "Conta bloqueada temporariamente. Tente novamente em alguns minutos.";
       } else if (status === 400) {
-        // Erros de validação do backend
         const backendMsg = err?.response?.data?.mensagem || err?.response?.data?.message;
         msg = backendMsg || "Dados inválidos. Verifique os campos.";
       } else if (err?.response?.data?.erro) {
