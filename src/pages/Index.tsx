@@ -6,16 +6,18 @@ import ProductGrid from "@/components/ProductGrid";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
 
     return (
-        <div className="flex min-h-screen flex-col bg-background">
-            <Header onSearch={setSearchQuery} />
+        <div className="flex min-h-screen flex-col">
+            <Header onSearch={(query) => setSearchQuery(query)} />
+            <HeroBanner />
             <main className="flex-1">
-                <HeroBanner />
-                <DepartmentGrid onSelect={setSelectedCategory} selected={selectedCategory} />
-                <ProductGrid categoryId={selectedCategory} searchQuery={searchQuery} />
+                <div className="container space-y-8 py-8">
+                    <DepartmentGrid onSelectCategory={(category) => setSelectedCategory(category)} />
+                    <ProductGrid searchQuery={searchQuery} selectedCategory={selectedCategory} />
+                </div>
             </main>
             <Footer />
         </div>

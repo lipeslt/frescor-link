@@ -13,9 +13,6 @@ export interface RegisterPayload {
 
 export interface LoginResponse {
   token: string;
-  refreshToken: string;
-  tipo: string;
-  expiracaoEm: number;
 }
 
 export const authService = {
@@ -27,13 +24,17 @@ export const authService = {
 
   decodeToken: (token: string): { id: string; nome: string; email: string } | null => {
     try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
+      const parts = token.split(".");
+      if (parts.length !== 3) return null;
+
+      const payload = JSON.parse(atob(parts[1]));
       return {
-        id: payload.sub,
-        nome: payload.nome,
-        email: payload.email,
+        id: payload.id || "",
+        nome: payload.nome || "Usuário",
+        email: payload.email || payload.sub || "",
       };
-    } catch {
+    } catch (error) {
+      console.error("Erro ao decodificar token:", error);
       return null;
     }
   },
