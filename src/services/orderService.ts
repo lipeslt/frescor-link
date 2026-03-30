@@ -2,7 +2,7 @@ import api from "@/lib/api";
 
 export interface CreateOrderPayload {
   usuarioId: string;
-  status: string;
+  valorTotal: number;
 }
 
 export interface Order {
@@ -16,6 +16,14 @@ export interface Order {
   updatedAt?: string;
 }
 
+export interface OrderItem {
+  id: string;
+  produtoId: string;
+  nomeProduto: string;
+  quantidade: number;
+  precoUnitario: number;
+}
+
 export interface PedidoResponse {
   id: string;
   usuario: {
@@ -24,9 +32,11 @@ export interface PedidoResponse {
     email: string;
   };
   status: string;
+  valorTotal?: number;
   dataPedido?: string;
   createdAt?: string;
   updatedAt?: string;
+  itens?: OrderItem[];
 }
 
 export const orderService = {
@@ -43,4 +53,7 @@ export const orderService = {
 
   updateStatus: (id: string, status: string, usuarioId: string) =>
       api.put<PedidoResponse>(`/pedidos/${id}`, { usuarioId, status }),
+
+  getByUser: (usuarioId: string) =>
+      api.get<PedidoResponse[]>(`/pedidos/usuario/${usuarioId}`),
 };

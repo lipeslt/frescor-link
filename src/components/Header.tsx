@@ -67,6 +67,12 @@ const Header = ({ onSearch }: HeaderProps) => {
                 <span className="text-sm font-medium text-muted-foreground">
                   Olá, {user?.nome?.split(" ")[0]}
                 </span>
+                    <a href="/perfil">
+                      <Button variant="ghost" size="sm">
+                        <User size={16} />
+                        Meu Perfil
+                      </Button>
+                    </a>
                     <Button variant="ghost" size="sm" onClick={logout}>
                       <LogOut size={16} />
                     </Button>
@@ -113,9 +119,17 @@ const Header = ({ onSearch }: HeaderProps) => {
                 {isAuthenticated ? (
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">Olá, {user?.nome}</span>
-                      <Button variant="ghost" size="sm" onClick={logout}>
-                        Sair <LogOut size={14} className="ml-1" />
-                      </Button>
+                      <div className="flex items-center gap-1">
+                        <a href="/perfil" onClick={() => setMenuOpen(false)}>
+                          <Button variant="ghost" size="sm">
+                            <User size={14} className="mr-1" />
+                            Meu Perfil
+                          </Button>
+                        </a>
+                        <Button variant="ghost" size="sm" onClick={logout}>
+                          Sair <LogOut size={14} className="ml-1" />
+                        </Button>
+                      </div>
                     </div>
                 ) : (
                     <Button className="w-full" onClick={() => { setAuthOpen(true); setMenuOpen(false); }}>

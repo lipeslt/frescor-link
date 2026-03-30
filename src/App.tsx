@@ -8,6 +8,8 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import MyOrders from "./pages/MyOrders";
 import NotFound from "./pages/NotFound";
+import PaymentReturn from "./pages/PaymentReturn";
+import Perfil from "./pages/Perfil";
 import AdminGuard from "./components/AdminGuard";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/pedido/:id" element={<OrderConfirmation />} />
           <Route path="/meus-pedidos" element={<MyOrders />} />
+          <Route path="/pagamento/retorno" element={<PaymentReturn />} />
+          <Route path="/perfil" element={<Perfil />} />
           <Route element={<AdminGuard />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Navigate to="/admin/dashboard" replace />} />

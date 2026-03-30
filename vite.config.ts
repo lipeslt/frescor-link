@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 5173, // <- mudamos de 8080 para 5173 (padrão Vite)
+    allowedHosts: true,
     hmr: {
       overlay: false,
     },
